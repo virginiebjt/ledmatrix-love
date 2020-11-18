@@ -7,21 +7,20 @@ from datetime import datetime
 
 from flask import Flask, request, jsonify
 
+#import Luma's library to display the text on the  led matrix
 from luma.core.interface.serial import spi, noop
 from luma.core.render import canvas
 from luma.core.virtual import viewport
 from luma.led_matrix.device import max7219
 from luma.core.legacy import text, show_message
-from luma.core.legacy.font import proportional, LCD_FONT, CP437_FONT
-from PIL import ImageFont
+from luma.core.legacy.font import proportional, LCD_FONT
 
-font = ImageFont.truetype("examples/pixelmix.ttf", 8)
-
+#define the led matrix configuration - change the cascaded number to the number of matrix you have, and the block orientation if needed
 serial = spi(port=0, device=0, gpio=noop())
-device = max7219(serial, cascaded=5, block_orientation=-90)
+device = max7219(serial, cascaded=4, block_orientation=-90)
 
 
-
+#initialize the app
 app = Flask(__name__)
 
 @app.route('/webhooks/inbound-sms', methods=['GET', 'POST'])
@@ -34,6 +33,7 @@ def inbound_sms():
     else:
         data = dict(request.form) or dict(request.args)
         print(data)
+        #submit the text to the leds
         sms = request.args.get('text')
         show_message(device, sms, fill="white", font=proportional(LCD_FONT), scroll_delay=0.05)
                 
