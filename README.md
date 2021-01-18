@@ -19,5 +19,5 @@ CS : PIN 24 (GPIO 8 (SPI CE0)
 CLK : PIN 23 GPIO 11 (SPI CLK)
 
 
-Troubleshooting : ensure that you've enabled the SPI kernel on your RPI (type sudo rpi-config in your terminal and navigate to interface)
+Troubleshooting: ensure that you've enabled the SPI kernel on your RPI (type sudo rpi-config in your terminal and navigate to interface)
 
